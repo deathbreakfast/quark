@@ -457,15 +457,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "uf-quark"
-version = "0.1.1"
-dependencies = [
- "criterion",
- "dhat",
- "inventory",
-]
-
-[[package]]
 name = "quote"
 version = "1.0.45"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -645,6 +636,15 @@ checksum = "be4d6b5f19ff7664e8c98d03e2139cb510db9b0a60b55f8e8709b689d939b6bc"
 dependencies = [
  "serde",
  "serde_json",
+]
+
+[[package]]
+name = "uf-quark"
+version = "0.1.1"
+dependencies = [
+ "criterion",
+ "dhat",
+ "inventory",
 ]
 
 [[package]]
