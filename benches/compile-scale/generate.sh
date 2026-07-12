@@ -72,7 +72,7 @@ name = "quark-scale-{n}-bin"
 path = "src/bin/main.rs"
 
 [dependencies]
-quark = {{ path = "../../.." }}
+quark = {{ package = "uf-quark", path = "../../.." }}
 inventory = "0.3"
 """
     )

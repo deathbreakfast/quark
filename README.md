@@ -1,6 +1,8 @@
 # Quark
 
 [![CI](https://github.com/unified-field-dev/quark/actions/workflows/ci.yml/badge.svg)](https://github.com/unified-field-dev/quark/actions/workflows/ci.yml)
+[![Crates.io](https://img.shields.io/crates/v/uf-quark.svg)](https://crates.io/crates/uf-quark)
+[![docs.rs](https://docs.rs/uf-quark/badge.svg)](https://docs.rs/uf-quark)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 Generic link-time registry infrastructure for Rust.
@@ -9,9 +11,23 @@ Quark provides a `Registrable` trait, an owned `Registry<T>`, and a `define_regi
 macro for building type-safe registries backed by [`inventory`](https://docs.rs/inventory)
 link-time collection.
 
-**Status:** v0.1.1 early release · [MIT](LICENSE) · [GitHub](https://github.com/unified-field-dev/quark)
+**Status:** v0.1.1 early release · [MIT](LICENSE) · [GitHub](https://github.com/unified-field-dev/quark) · [crates.io](https://crates.io/crates/uf-quark) · [docs.rs](https://docs.rs/uf-quark)
 
 **Performance (see [study](docs/PERFORMANCE_STUDY.md)):** lookups ~15 ns at 10k entries; compile scales ~linearly with `inventory::submit!` count.
+
+## Install
+
+The crates.io package is **`uf-quark`**. With `[lib] name = "quark"`, imports stay `use quark::…`:
+
+```toml
+quark = { package = "uf-quark", version = "0.1.1" }
+```
+
+```bash
+cargo add uf-quark
+# then in Cargo.toml, rename the dep key if you want `use quark::…`:
+# quark = { package = "uf-quark", version = "0.1.1" }
+```
 
 ## Mental model
 
@@ -69,8 +85,8 @@ let script = registry.get("daily_reset").unwrap();
 | Schema / type system | `SchemaRegistry`, `TraitRegistry` | Schemas and trait implementations |
 | Plugin / app discovery | `AppRegistry`, `SearchSourceRegistry` | Installable apps and search index sources |
 
-Downstream crates should depend on `quark` and use `quark::inventory`, not a direct
-`inventory` dependency.
+Downstream crates should depend on `uf-quark` (as `quark` via `package = "uf-quark"`)
+and use `quark::inventory`, not a direct `inventory` dependency.
 
 ## Development
 
@@ -84,7 +100,7 @@ cargo doc --no-deps
 
 | Doc | Audience |
 |-----|----------|
-| `cargo doc --open` | API reference |
+| [`docs.rs/uf-quark`](https://docs.rs/uf-quark) / `cargo doc --open` | API reference |
 | [`docs/PERFORMANCE_STUDY.md`](docs/PERFORMANCE_STUDY.md) | Benchmark summary and adoption guidance |
 | [`docs/profiling.md`](docs/profiling.md) | Reproducing benchmarks |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Development and PRs |

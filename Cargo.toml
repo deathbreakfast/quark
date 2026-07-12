@@ -3,17 +3,25 @@ members = ["."]
 resolver = "2"
 
 [package]
-name = "quark"
+name = "uf-quark"
 version = "0.1.1"
 edition = "2021"
 authors = ["Sean O'Rourke"]
 description = "Generic link-time registry infrastructure for Rust"
 license = "MIT"
 repository = "https://github.com/unified-field-dev/quark"
+homepage = "https://github.com/unified-field-dev/quark"
 readme = "README.md"
 keywords = ["registry", "inventory", "plugin", "link-time", "discovery"]
 categories = ["development-tools"]
-documentation = "https://docs.rs/quark"
+documentation = "https://docs.rs/uf-quark"
+exclude = ["benches/compile-scale/**", "scripts/**"]
+
+[package.metadata.docs.rs]
+all-features = true
+
+[lib]
+name = "quark"
 
 [dependencies]
 inventory = "0.3"
