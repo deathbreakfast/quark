@@ -1,8 +1,6 @@
 # Quark
 
 [![CI](https://github.com/unified-field-dev/quark/actions/workflows/ci.yml/badge.svg)](https://github.com/unified-field-dev/quark/actions/workflows/ci.yml)
-[![Crates.io](https://img.shields.io/crates/v/uf-quark.svg)](https://crates.io/crates/uf-quark)
-[![docs.rs](https://docs.rs/uf-quark/badge.svg)](https://docs.rs/uf-quark)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 Generic link-time registry infrastructure for Rust.
@@ -11,23 +9,9 @@ Quark provides a `Registrable` trait, an owned `Registry<T>`, and a `define_regi
 macro for building type-safe registries backed by [`inventory`](https://docs.rs/inventory)
 link-time collection.
 
-**Status:** v0.1.1 early release · [MIT](LICENSE) · [GitHub](https://github.com/unified-field-dev/quark) · [crates.io](https://crates.io/crates/uf-quark) · [docs.rs](https://docs.rs/uf-quark)
+**Status:** v0.1.1 early release · [MIT](LICENSE) · [GitHub](https://github.com/unified-field-dev/quark)
 
 **Performance (see [study](docs/PERFORMANCE_STUDY.md)):** lookups ~15 ns at 10k entries; compile scales ~linearly with `inventory::submit!` count.
-
-## Install
-
-The crates.io package is **`uf-quark`**. With `[lib] name = "quark"`, imports stay `use quark::…`:
-
-```toml
-quark = { package = "uf-quark", version = "0.1.1" }
-```
-
-```bash
-cargo add uf-quark
-# then in Cargo.toml, rename the dep key if you want `use quark::…`:
-# quark = { package = "uf-quark", version = "0.1.1" }
-```
 
 ## Mental model
 
@@ -85,8 +69,43 @@ let script = registry.get("daily_reset").unwrap();
 | Schema / type system | `SchemaRegistry`, `TraitRegistry` | Schemas and trait implementations |
 | Plugin / app discovery | `AppRegistry`, `SearchSourceRegistry` | Installable apps and search index sources |
 
-Downstream crates should depend on `uf-quark` (as `quark` via `package = "uf-quark"`)
-and use `quark::inventory`, not a direct `inventory` dependency.
+Downstream crates should depend on `quark` and use `quark::inventory`, not a direct
+`inventory` dependency.
+
+## Examples
+
+Runnable walkthroughs, from single-file basics to a two-crate plugin host proving cross-crate
+link-time discovery: [`examples/README.md`](examples/README.md).
+
+```bash
+cargo run --example registry_basics   # Registrable + auto_discover + duplicate keys
+cargo run --example macro_registry    # define_registry! newtype + Deref
+cargo run -p plugin-host              # cross-crate plugin discovery
+```
+
+## Compile-scale fixtures
+
+When you need to measure how **inventory compile cost** scales with registry size — before adopting Quark in a macro-heavy crate — use the generated packages under [`benches/compile-scale/`](benches/compile-scale/). Each `quark-scale-{N}/` crate contains **N** `inventory::submit!` entries (tiers: 1, 10, 100, 500, 1000, 5000, 10000).
+
+Regenerate tiers:
+
+```bash
+bash benches/compile-scale/generate.sh
+```
+
+Cold build sweep:
+
+```bash
+./scripts/bench-compile-scale.sh
+```
+
+Incremental scenarios:
+
+```bash
+./scripts/bench-incremental-scale.sh
+```
+
+These are manual / scheduled benchmarks — not part of default CI. See [`benches/compile-scale/README.md`](benches/compile-scale/README.md) and [`docs/PERFORMANCE_STUDY.md`](docs/PERFORMANCE_STUDY.md) for methodology.
 
 ## Development
 
@@ -100,7 +119,8 @@ cargo doc --no-deps
 
 | Doc | Audience |
 |-----|----------|
-| [`docs.rs/uf-quark`](https://docs.rs/uf-quark) / `cargo doc --open` | API reference |
+| `cargo doc --open` | API reference |
+| [`examples/README.md`](examples/README.md) | Runnable walkthrough ladder |
 | [`docs/PERFORMANCE_STUDY.md`](docs/PERFORMANCE_STUDY.md) | Benchmark summary and adoption guidance |
 | [`docs/profiling.md`](docs/profiling.md) | Reproducing benchmarks |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Development and PRs |

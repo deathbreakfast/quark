@@ -10,7 +10,7 @@
 
 Quark is a Rust library for type-safe, link-time registries backed by [`inventory`](https://docs.rs/inventory). This study evaluates four cost dimensions: runtime HashMap behavior after descriptors exist, cold compile cost of `inventory::submit!` macro expansion, incremental recompile when adding registrations, and heap memory at scale.
 
-We present baseline measurements on WSL2 lab hardware (Intel i7-11700KF) at submit tiers from 1 to 10,000. Runtime lookups remain O(1) in practice through 10k entries. Compile cost scales roughly linearly with submit count. Incremental compile recompiles the whole registration crate when adding one submit. Integration tests (S1–S4, T1–T10) guard correctness and concurrency at scale.
+We present baseline measurements on lab hardware (x86_64 Linux workstation) at submit tiers from 1 to 10,000. Runtime lookups remain O(1) in practice through 10k entries. Compile cost scales roughly linearly with submit count. Incremental compile recompiles the whole registration crate when adding one submit. Integration tests (S1–S4, T1–T10) guard correctness and concurrency at scale.
 
 ---
 
@@ -36,11 +36,11 @@ We present baseline measurements on WSL2 lab hardware (Intel i7-11700KF) at subm
 
 ## Baseline environment
 
-Recorded **2026-06-01** on WSL2 / x86_64:
+Recorded **2026-06-01** on x86_64 Linux lab hardware:
 
 | | |
 |--|--|
-| **Host CPU** | 11th Gen Intel Core i7-11700KF @ 3.60GHz (16 threads) |
+| **Host CPU** | x86_64 workstation (16 threads) |
 | **Rust** | `rustc 1.96.0-nightly (fda6d37bb 2026-03-27)` — baselines used nightly; quark itself requires stable Rust |
 | **Quark** | `v0.1.1` |
 | **Profile** | `dev` (compile-scale), `release` + LTO (criterion) |
@@ -184,5 +184,5 @@ See [`profiling.md`](profiling.md) for quick command reference.
 |-----|------|
 | `cargo test` | Every push / PR |
 | `cargo doc --no-deps` | Every push / PR |
-| `cargo bench --bench runtime` (lookup subset only) | Every push / PR — full suite is manual (register_build OOMs on CI) |
+| `cargo bench --bench runtime` | Optional CI job (reduced sample size) |
 | Compile-scale 5000/10000 | Manual or scheduled only |

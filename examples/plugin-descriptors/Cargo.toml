@@ -1,0 +1,13 @@
+[package]
+name = "plugin-descriptors"
+version = "0.1.0"
+edition = "2021"
+publish = false
+description = "Example: link-time TransformPlugin descriptors for quark::Registry"
+
+[lib]
+name = "plugin_descriptors"
+path = "src/lib.rs"
+
+[dependencies]
+quark = { package = "uf-quark", path = "../.." }

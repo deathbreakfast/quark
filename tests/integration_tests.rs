@@ -453,10 +453,7 @@ fn memory_registry_at_scale() {
     let _profiler = dhat::Profiler::new_heap();
     let reg = build_scale_registry(10_000);
     let stats = dhat::HeapStats::get();
-    eprintln!(
-        "heap bytes at 10k registry: {}",
-        stats.curr_bytes
-    );
+    eprintln!("heap bytes at 10k registry: {}", stats.curr_bytes);
     assert!(reg.len() == 10_000);
     std::hint::black_box(reg);
     std::hint::black_box(stats);

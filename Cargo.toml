@@ -1,5 +1,5 @@
 [workspace]
-members = ["."]
+members = [".", "examples/plugin-descriptors", "examples/plugin-host"]
 resolver = "2"
 
 [package]
