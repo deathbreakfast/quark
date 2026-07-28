@@ -13,10 +13,15 @@ jobs:
       - run: cargo test
       - run: cargo doc --no-deps
 
-  bench-runtime:
+  deny:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      # Full `cargo bench --bench runtime` OOMs on CI: register_build leaks in-loop.
-      # Smoke-test compile + lightweight lookup benches only (see docs/profiling.md).
-      - run: cargo bench --bench runtime -- '^get_hit/100$' --sample-size 10
+      - uses: EmbarkStudios/cargo-deny-action@v2
+
+  bench-runtime:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - run: cargo bench --bench runtime -- --sample-size 10

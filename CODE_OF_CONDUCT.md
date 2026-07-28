@@ -60,7 +60,7 @@ representative at an online or offline event.
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the project maintainer on GitHub:
-[@deathbreakfast](https://github.com/deathbreakfast) (profile message or contact
+[@unified-field-dev](https://github.com/unified-field-dev) (profile message or contact
 form, if available).
 
 All complaints will be reviewed and investigated promptly and fairly.

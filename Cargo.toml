@@ -1,10 +1,10 @@
 [workspace]
-members = ["."]
+members = [".", "examples/plugin-descriptors", "examples/plugin-host"]
 resolver = "2"
 
 [package]
 name = "uf-quark"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 authors = ["Sean O'Rourke"]
 description = "Generic link-time registry infrastructure for Rust"

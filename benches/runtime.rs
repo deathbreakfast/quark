@@ -24,9 +24,18 @@ fn build_registry(n: usize) -> Registry<BenchDescriptor> {
     reg
 }
 
+fn bench_sizes() -> &'static [usize] {
+    // register_build leaks Box per iteration; 10_000 OOMs GitHub-hosted runners.
+    if std::env::var_os("CI").is_some() {
+        &[1, 10, 100, 1000]
+    } else {
+        &[1, 10, 100, 1000, 10_000]
+    }
+}
+
 fn bench_register_build(c: &mut Criterion) {
     let mut group = c.benchmark_group("register_build");
-    for n in [1_usize, 10, 100, 1000, 10_000] {
+    for &n in bench_sizes() {
         group.bench_with_input(BenchmarkId::from_parameter(n), &n, |b, &n| {
             b.iter(|| {
                 let mut reg = Registry::<BenchDescriptor>::new();
@@ -46,7 +55,7 @@ fn bench_register_build(c: &mut Criterion) {
 
 fn bench_get_hit(c: &mut Criterion) {
     let mut group = c.benchmark_group("get_hit");
-    for n in [1_usize, 10, 100, 1000, 10_000] {
+    for &n in bench_sizes() {
         let reg = build_registry(n);
         let key = format!("item_{:05}", n / 2);
         group.bench_with_input(BenchmarkId::from_parameter(n), &n, |b, _| {
@@ -58,7 +67,7 @@ fn bench_get_hit(c: &mut Criterion) {
 
 fn bench_get_miss(c: &mut Criterion) {
     let mut group = c.benchmark_group("get_miss");
-    for n in [1_usize, 10, 100, 1000, 10_000] {
+    for &n in bench_sizes() {
         let reg = build_registry(n);
         group.bench_with_input(BenchmarkId::from_parameter(n), &n, |b, _| {
             b.iter(|| black_box(reg.get("missing_key")));
@@ -69,7 +78,7 @@ fn bench_get_miss(c: &mut Criterion) {
 
 fn bench_list(c: &mut Criterion) {
     let mut group = c.benchmark_group("list");
-    for n in [1_usize, 10, 100, 1000, 10_000] {
+    for &n in bench_sizes() {
         let reg = build_registry(n);
         group.bench_with_input(BenchmarkId::from_parameter(n), &n, |b, _| {
             b.iter(|| black_box(reg.list()));
@@ -80,7 +89,7 @@ fn bench_list(c: &mut Criterion) {
 
 fn bench_iter(c: &mut Criterion) {
     let mut group = c.benchmark_group("iter");
-    for n in [1_usize, 10, 100, 1000, 10_000] {
+    for &n in bench_sizes() {
         let reg = build_registry(n);
         group.bench_with_input(BenchmarkId::from_parameter(n), &n, |b, _| {
             b.iter(|| black_box(reg.iter().count()));
@@ -91,7 +100,7 @@ fn bench_iter(c: &mut Criterion) {
 
 fn bench_clone(c: &mut Criterion) {
     let mut group = c.benchmark_group("clone");
-    for n in [1_usize, 10, 100, 1000, 10_000] {
+    for &n in bench_sizes() {
         let reg = build_registry(n);
         group.bench_with_input(BenchmarkId::from_parameter(n), &n, |b, _| {
             b.iter(|| black_box(reg.clone()));
