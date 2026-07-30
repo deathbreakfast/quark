@@ -1,7 +1,7 @@
 # Quark examples
 
 Runnable proofs for the `Registrable` / `Registry<T>` / `define_registry!` contract, plus a
-two-crate plugin host proving link-time discovery works **across crate boundaries**, not just
+two-crate plugin host proving link-time discovery works **across crate boundaries** as well as
 within one binary. Start with the canonical path; branch when you need the macro sugar or the
 cross-crate proof.
 

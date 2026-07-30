@@ -69,8 +69,8 @@ let script = registry.get("daily_reset").unwrap();
 | Schema / type system | `SchemaRegistry`, `TraitRegistry` | Schemas and trait implementations |
 | Plugin / app discovery | `AppRegistry`, `SearchSourceRegistry` | Installable apps and search index sources |
 
-Downstream crates should depend on `quark` and use `quark::inventory`, not a direct
-`inventory` dependency.
+Downstream crates should depend on `quark` and import `quark::inventory` (the re-export)
+rather than adding a separate `inventory` dependency.
 
 ## Examples
 

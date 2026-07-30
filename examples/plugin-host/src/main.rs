@@ -25,8 +25,8 @@ quark::inventory::submit! {
 }
 
 fn main() {
-    // Step 3 — auto_discover() finds plugins from every crate linked into this binary,
-    // not just this one: 2 from plugin-descriptors + 1 defined right here.
+    // Step 3 — auto_discover() finds plugins from every crate linked into this binary
+    // (host + plugins): 2 from plugin-descriptors + 1 defined right here.
     let registry = TransformRegistry::auto_discover();
 
     let mut names = registry.list();
