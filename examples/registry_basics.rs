@@ -48,7 +48,10 @@ fn main() {
     let mut manual = Registry::<ScriptDescriptor>::new();
     manual.register(&ADHOC);
     assert_eq!(manual.len(), 1);
-    println!("registry_basics: manual registry has {} entry", manual.len());
+    println!(
+        "registry_basics: manual registry has {} entry",
+        manual.len()
+    );
 
     // Step 5 — Duplicate keys are last-write-wins, not an error.
     static ADHOC_V2: ScriptDescriptor = ScriptDescriptor {
@@ -56,7 +59,11 @@ fn main() {
         handler: || "adhoc v2 complete",
     };
     manual.register(&ADHOC_V2);
-    assert_eq!(manual.len(), 1, "duplicate key overwrites, does not grow the registry");
+    assert_eq!(
+        manual.len(),
+        1,
+        "duplicate key overwrites, does not grow the registry"
+    );
     let resolved = manual.get("adhoc").expect("adhoc key resolves");
     println!(
         "registry_basics: duplicate key 'adhoc' resolves to the latest registration -> {}",

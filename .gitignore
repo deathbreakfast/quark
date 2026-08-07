@@ -23,3 +23,6 @@ target
 
 # Local Sentrux quality-gate config (dev artifact; not part of upstream)
 .sentrux/
+
+# dhat heap profile output (cargo test --features dhat-heap)
+dhat-heap.json

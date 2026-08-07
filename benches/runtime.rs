@@ -3,6 +3,7 @@ use quark::{Registrable, Registry};
 
 struct BenchDescriptor {
     key: String,
+    #[allow(dead_code)] // retained for realistic descriptor shape in benches
     index: usize,
 }
 

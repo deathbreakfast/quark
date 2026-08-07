@@ -36,15 +36,19 @@ fn main() {
     let sample = "hello from quark";
     for name in &names {
         let plugin = registry.get(name).expect("listed key resolves");
-        println!("  {name} ({}): {}", plugin.description, (plugin.run)(sample));
+        println!(
+            "  {name} ({}): {}",
+            plugin.description,
+            (plugin.run)(sample)
+        );
     }
 
-    assert!(names.contains(&"uppercase"), "plugin-descriptors: uppercase");
+    assert!(
+        names.contains(&"uppercase"),
+        "plugin-descriptors: uppercase"
+    );
     assert!(names.contains(&"reverse"), "plugin-descriptors: reverse");
     assert!(names.contains(&"shout"), "plugin-host: shout");
 
-    println!(
-        "plugin-host: OK ({} plugins from 2 crates)",
-        registry.len()
-    );
+    println!("plugin-host: OK ({} plugins from 2 crates)", registry.len());
 }
